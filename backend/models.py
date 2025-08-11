@@ -10,8 +10,10 @@ class NewsItem(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    link = Column(String, unique=true)
+    link = Column(String, unique=True)
     source = Column(String)
     published = Column(DateTime)
     summary = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
