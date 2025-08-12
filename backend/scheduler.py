@@ -9,7 +9,6 @@ def start_scheduler():
     def job():
         print("🔄 Running RSS fetch job...")
         
-        # Test connection first
         if not test_connection():
             print("❌ Database connection test failed, skipping RSS fetch")
             return
@@ -21,7 +20,6 @@ def start_scheduler():
             # print("cp 2")
         except Exception as e:
             print(f"RSS fetch failed: {e}")
-            # If it's a connection error, try to rollback
             try:
                 db.rollback()
             except:
@@ -33,6 +31,6 @@ def start_scheduler():
                 pass
             # print("cp 3")
 
-    scheduler.add_job(job, 'interval', minutes=1)
+    scheduler.add_job(job, 'interval', minutes=10)
     scheduler.start()
     print("Scheduler started, RSS feeds will be fetched every 10 minutes")

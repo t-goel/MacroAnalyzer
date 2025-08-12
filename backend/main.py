@@ -5,7 +5,6 @@ from db import engine
 
 app = FastAPI()
 
-#Base.metadata.create_all(bind=engine)
 
 start_scheduler()
 

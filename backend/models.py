@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import Column, Integer, String, Text, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -16,4 +16,9 @@ class NewsItem(Base):
     summary = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    #nlp fields
+    sentiment = Column(Text)
+    positive = Column(Float)
+    negative = Column(Float)
+    neutral = Column(Float)
 

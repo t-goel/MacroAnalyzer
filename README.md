@@ -97,7 +97,7 @@ SQLAlchemy ORM.
 
 APScheduler for periodic jobs.
 
-FinBERT via Hugging Face Transformers.
+FinBERT + pytorch via Hugging Face Transformers.
 
 yfinance for market data.
 

@@ -4,7 +4,7 @@ from db import SessionLocal
 from db_clean import delete_old_news
 from sqlalchemy import text
 from models import NewsItem
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from dateutil import parser as date_parser
 import requests
 import ssl
@@ -55,10 +55,15 @@ def fetch_and_store_news(db: Session):
                     exists = db.query(NewsItem).filter_by(link=entry.link).first()
                     
                     if not exists:
-                        # Parse the published date
+                        # Parse the published date and check if > 7 days
                         published_date = datetime.now()
                         if hasattr(entry, 'published'):
                             published_date = date_parser.parse(entry.published)
+
+
+                        if published_date < datetime.now(timezone.utc) - timedelta(days=7):
+                            continue
+                        
                         
                         # Create new news item
                         news = NewsItem(
