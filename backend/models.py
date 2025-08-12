@@ -6,7 +6,7 @@ Base = declarative_base()
 
 #each instance of NewsItem is a new row
 class NewsItem(Base):
-    _tablename_ = 'news'
+    __tablename__ = "news"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
