@@ -1,5 +1,6 @@
 import feedparser
 from sqlalchemy.orm import Session
+from db import SessionLocal
 from db_clean import delete_old_news
 from sqlalchemy import text
 from models import NewsItem
@@ -92,3 +93,6 @@ def fetch_and_store_news(db: Session):
             db.rollback()
     else:
         print("\n📰 No new articles to commit")
+
+    with SessionLocal() as db:
+        delete_old_news(db)

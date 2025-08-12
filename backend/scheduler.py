@@ -15,10 +15,10 @@ def start_scheduler():
             return
         
         db = SessionLocal()
-        print("cp 1")
+        # print("cp 1")
         try:
             fetch_and_store_news(db)
-            print("cp 2")
+            # print("cp 2")
         except Exception as e:
             print(f"RSS fetch failed: {e}")
             # If it's a connection error, try to rollback
@@ -31,9 +31,8 @@ def start_scheduler():
                 db.close()
             except:
                 pass
-            print("cp 3")
+            # print("cp 3")
 
-    # Change scheduler later - using 5 minutes for now to reduce load
-    scheduler.add_job(job, 'interval', minutes=1)
+    scheduler.add_job(job, 'interval', minutes=10)
     scheduler.start()
-    print("Scheduler started, RSS feeds will be fetched every 5 minutes")
+    print("Scheduler started, RSS feeds will be fetched every 10 minutes")
