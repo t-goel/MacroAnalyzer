@@ -7,7 +7,7 @@ from models import NewsItem
 from datetime import datetime, timedelta, timezone
 from dateutil import parser as date_parser
 import ssl
-
+from db_clean import search_days
 
 # Only bypass SSL in development
 if hasattr(ssl, '_create_unverified_context'):
@@ -54,13 +54,13 @@ def fetch_and_store_news(db: Session):
                     exists = db.query(NewsItem).filter_by(link=entry.link).first()
                     
                     if not exists:
-                        # Parse the published date and check if > 7 days
+                        
                         published_date = datetime.now()
                         if hasattr(entry, 'published'):
                             published_date = date_parser.parse(entry.published)
 
 
-                        if published_date < datetime.now(timezone.utc) - timedelta(days=7):
+                        if published_date < datetime.now(timezone.utc) - timedelta(days=search_days):
                             continue
                         
                         
@@ -97,6 +97,8 @@ def fetch_and_store_news(db: Session):
             db.rollback()
     else:
         print("\n📰 No new articles to commit")
+
+    print(f"Processed articles from the past {search_days} days!")
 
     with SessionLocal() as db:
         delete_old_news(db)
