@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 from dateutil import parser as date_parser
 import ssl
 from db_clean import search_days
+from nlp.sentiment import analyse_batch
 
 # Only bypass SSL in development
 if hasattr(ssl, '_create_unverified_context'):
@@ -33,6 +34,8 @@ def fetch_and_store_news(db: Session):
     
     total_new_articles = 0
     
+    new_entries = []
+
     for source_name, url in RSS_Feeds.items():
         print(f"\n🔍 Processing {source_name}")
         
@@ -48,6 +51,7 @@ def fetch_and_store_news(db: Session):
             
             # Process each entry
             new_articles = 0
+            
             for entry in feed.entries:
                 try:
                     # Check if article already exists
@@ -64,6 +68,7 @@ def fetch_and_store_news(db: Session):
                             continue
                         
                         
+
                         # Create new news item
                         news = NewsItem(
                             title=entry.title,

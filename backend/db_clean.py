@@ -12,4 +12,4 @@ def delete_old_news(db: Session):
         count += 1
         db.delete(item)
     db.commit()
-    print(f"✅ Deleted {count} old entries!")
+    print(f"\n✅ Deleted {count} old entries!")
