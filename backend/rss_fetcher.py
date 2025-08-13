@@ -6,7 +6,6 @@ from sqlalchemy import text
 from models import NewsItem
 from datetime import datetime, timedelta, timezone
 from dateutil import parser as date_parser
-import requests
 import ssl
 
 

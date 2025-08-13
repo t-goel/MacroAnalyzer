@@ -31,6 +31,6 @@ def start_scheduler():
                 pass
             # print("cp 3")
 
-    scheduler.add_job(job, 'interval', minutes=10)
+    scheduler.add_job(job, 'interval', seconds=30)
     scheduler.start()
     print("Scheduler started, RSS feeds will be fetched every 10 minutes")
