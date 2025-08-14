@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from dateutil import parser as date_parser
 import ssl
 from db_clean import search_days
-from nlp.sentiment import analyse_batch
+from nlp.sentiment import analyze_batch
 
 # Only bypass SSL in development
 if hasattr(ssl, '_create_unverified_context'):
@@ -33,7 +33,6 @@ def fetch_and_store_news(db: Session):
         return
     
     total_new_articles = 0
-    
     new_entries = []
 
     for source_name, url in RSS_Feeds.items():
@@ -47,11 +46,12 @@ def fetch_and_store_news(db: Session):
                 print(f"❌ No entries found for {source_name}")
                 continue
                 
-            print(f"✅ Found {len(feed.entries)} entries")
+            
             
             # Process each entry
-            new_articles = 0
-            
+
+            this_new_articles = 0
+
             for entry in feed.entries:
                 try:
                     # Check if article already exists
@@ -70,30 +70,49 @@ def fetch_and_store_news(db: Session):
                         
 
                         # Create new news item
-                        news = NewsItem(
-                            title=entry.title,
-                            link=entry.link,
-                            source=source_name,
-                            summary=entry.get("summary", ""),
-                            published=published_date
-                        )
-                        
-                        db.add(news)
-                        new_articles += 1
+                        new_entries.append({
+                            "title":entry.title,
+                            "link":entry.link,
+                            "source":source_name,
+                            "summary":entry.get("summary", ""),
+                            "published":published_date
+                        })
+
+                        this_new_articles += 1
                         
                 except Exception as e:
                     print(f"⚠️  Error processing entry from {source_name}: {e}")
                     continue
-            
-            print(f"📰 Added {new_articles} new articles from {source_name}")
-            total_new_articles += new_articles
+
+            total_new_articles += this_new_articles
+
+            print(f"✅ Found {this_new_articles} new entries")
             
         except Exception as e:
             print(f"❌ Error fetching {source_name}: {e}")
             continue
     
-    # Commit all changes
+
+    #batch analyse and add to db
     if total_new_articles > 0:
+        texts = [f"{e['title']} {e['summary']}" for e in new_entries]
+        sentiments = analyze_batch(texts)
+
+        for entry, sent in zip(new_entries, sentiments):
+            news = NewsItem(
+                title=entry["title"],
+                link=entry["link"],
+                source=entry["source"],
+                summary=entry["summary"],
+                published=entry["published"],
+                sentiment=sent["sentiment"],
+                positive=float(sent["positive"]),
+                negative=float(sent["negative"]),
+                neutral=float(sent["neutral"])
+            )
+            db.add(news)
+    
+    
         try:
             db.commit()
             print(f"\n✅ Successfully committed {total_new_articles} new articles to database")
@@ -103,7 +122,6 @@ def fetch_and_store_news(db: Session):
     else:
         print("\n📰 No new articles to commit")
 
-    print(f"Processed articles from the past {search_days} days!")
-
-    with SessionLocal() as db:
-        delete_old_news(db)
+    print(f"\nProcessed articles from the past {search_days} days!")
+    
+    delete_old_news(db)

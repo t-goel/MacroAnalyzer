@@ -1,7 +1,8 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from db import SessionLocal, test_connection
 from rss_fetcher import fetch_and_store_news
-import time
+from datetime import datetime
+
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
@@ -31,6 +32,5 @@ def start_scheduler():
                 pass
             # print("cp 3")
 
-    scheduler.add_job(job, 'interval', minutes=1)
+    scheduler.add_job(job, 'interval', minutes=20,next_run_time=datetime.now())
     scheduler.start()
-    print("Scheduler started, RSS feeds will be fetched every 10 minutes")

@@ -22,9 +22,9 @@ Pull from multiple RSS feeds (e.g., Federal Reserve, Financial Times, Wall Stree
 
 Store article title, description, publication date, and source.
 
-Deduplicate articles and remove items older than 7 days automatically.
+Deduplicate articles and remove items older than x days automatically.
 
-Sentiment Analysis
+Sentiment Analysis - display negative sentiment average for each news source
 
 Use FinBERT to score each headline/description for sentiment polarity and probability.
 

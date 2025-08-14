@@ -17,7 +17,7 @@ def load_model():
         model.to(device)
         model.eval()
 
-def analyse_batch(texts: List[str]) -> List[Dict[str,float]]:
+def analyze_batch(texts: List[str]) -> List[Dict[str,float]]:
 
     load_model()
     inputs = tokenizer(
