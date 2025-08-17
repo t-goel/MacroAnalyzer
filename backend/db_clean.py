@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from models import NewsItem
 
-search_days = 1
+search_days = 20
 
 def delete_old_news(db: Session):
     cutoff_date = datetime.utcnow() - timedelta(days=search_days)
