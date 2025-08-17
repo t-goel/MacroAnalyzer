@@ -15,16 +15,16 @@ export default function Home() {
       <div className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
         {/* Market Trends */}
         <div className="flex-1 bg-gradient-to-br from-blue-700 to-blue-500 rounded-xl p-6 shadow-lg">
-          <h3 className="text-2xl font-bold text-white">Market Trends</h3>
-          <p className="text-gray-200 mb-4">
+          <h3 className="text-2xl font-bold text-white text-center">Market Trends</h3>
+          <p className="text-gray-200 mb-4 text-center">
             Visualize S&P 500 and other market indices.
           </p>
         </div>
 
         {/* Macro Analysis */}
         <div className="flex-1 bg-gradient-to-br from-green-700 to-green-500 rounded-xl p-6 shadow-lg">
-          <h3 className="text-2xl font-bold text-white mb-4">Macro-Analysis</h3>
-          <p className="text-gray-200 mb-4">
+          <h3 className="text-2xl font-bold text-white mb-4 text-center">Macro-Analysis</h3>
+          <p className="text-gray-200 mb-4 text-center">
             AI-powered macroeconomic insights based on top news stories.
           </p>
         </div>
