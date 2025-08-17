@@ -45,18 +45,19 @@ h1, h2, h3 {
 /* Navigation bar */
 nav {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 2rem;
   background: var(--secondary);
   padding: 1rem 0;
+  padding-left: 3rem;
   border-bottom: 1px solid #e5e7eb;
+  font-size: 2rem;
 }
 
 nav a {
   text-decoration: none;
-  color: var(--foreground);
   font-weight: 500;
-  transition: color 0.2s ease-in-out;
+  transition: color .5s ease-in-out;
 }
 
 nav a:hover {
