@@ -3,24 +3,73 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
 
-.color-example inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Modern sleek theme colors */
+  --primary: #2563eb; /* Tailwind blue-600 */
+  --secondary: #f3f4f6; /* Light gray for contrast */
+  --accent: #9333ea; /* Purple accent */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --secondary: #1f2937; /* Dark gray */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Makes footer stick to bottom */
+}
+
+main {
+  flex: 1; /* Pushes footer to bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 2rem;
+}
+
+/* Titles: make them stand out */
+h1, h2, h3 {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* Navigation bar */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  background: var(--secondary);
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--foreground);
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.875rem;
+  border-top: 1px solid #e5e7eb;
+  background: var(--secondary);
+  color: var(--foreground);
 }

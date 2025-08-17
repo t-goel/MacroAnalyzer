@@ -1,24 +1,15 @@
-export default function HomePage() {
+export default function Home() {
   return (
-    <section className="space-y-6">
-      <h2 className="text-3xl font-bold">Welcome to MacroAnalyser</h2>
-      <p className="text-lg text-gray-700">
-        Track, analyze, and visualize macroeconomic news & indicators — powered by AI.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-6 mt-8">
-        <div className="p-6 border rounded-xl bg-white shadow-sm">
-          <h3 className="font-semibold text-xl">📈 Market Trends</h3>
-          <p className="text-gray-600">Live updates on key global indicators.</p>
-        </div>
-
-        <div className="p-6 border rounded-xl bg-white shadow-sm">
-          <h3 className="font-semibold text-xl">📰 News Sentiment</h3>
-          <p className="text-gray-600">
-            See how central banks, governments, and markets are being covered.
+    <main className="flex-grow flex items-center justify-center -mt-16">
+        <div className="text-center space-y-6">
+          <h2 className="text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">
+            Welcome to Macro Analyser
+          </h2>
+          <p className="text-xl text-gray-400">
+            Analyse and track macroeconomic news with clarity.
           </p>
         </div>
-      </div>
-    </section>
-  );
+      </main>
+
+  )
 }
