@@ -18,7 +18,14 @@ if hasattr(ssl, '_create_unverified_context'):
 RSS_Feeds = {
     "Federal Reserve" : "https://www.federalreserve.gov/feeds/press_all.xml",
     "Financial Times" : "https://www.ft.com/world?format=rss",
-    "Wall Street Journal" : "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"
+    "Wall Street Journal" : "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
+    "Federal Reserve Bank of St. Louis" : "https://www.stlouisfed.org/rss/page%20resources/publications/blog-entries",
+    "Center for Economic and Policy Research" : "https://cepr.org/rss/news",
+    "BNP Paribas Economic Research" : "https://economic-research.bnpparibas.com/RSS/en-US/Eco-Flash",
+    "US Bureau of Economic Analysis" : "https://apps.bea.gov/rss/rss.xml",
+    "CNBC" : "https://www.cnbc.com/id/10001147/device/rss/rss.html",
+    
+    
 }
 
 def fetch_and_store_news(db: Session):

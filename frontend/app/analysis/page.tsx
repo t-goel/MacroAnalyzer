@@ -33,7 +33,7 @@ export default function SentimentPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">Financial Sentiment</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Financial Sentiment From the Headlines</h1>
       <div className="grid gap-6 md:grid-cols-2">
         {data.map((sourceData) => {
           const total = sourceData.positive + sourceData.negative + sourceData.neutral;
