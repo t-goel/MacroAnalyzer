@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { fetchLast20VOO } from "../analysis/getVOO";
+import { fetchLast20VOO } from "./getVOO";
 
 export default function SP500Chart() {
   const [data, setData] = useState<{ date: string; close: number }[]>([]);
@@ -12,7 +12,7 @@ export default function SP500Chart() {
       .then(setData)
       .catch(console.error);
   }, []);
-  
+
   return (
     <div className="w-full h-96 p-4 bg-white rounded-xl shadow pb-12">
       <h2 className="text-xl font-bold mb-2 text-red-300">

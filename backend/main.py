@@ -16,20 +16,7 @@ def root():
     return {"message": "MacroFactor API is live and fetching news"}
 
 
-@app.get("/news/sentiment")
-def get_sentiment_data(db: Session = Depends(get_db)):
-    sentiment_counts = (
-        db.query(NewsItem.sentiment, func.count(NewsItem.id))
-        .group_by(NewsItem.sentiment)
-        .all()
-    )
-    #returns list of tuples
 
-    result = {}
-    for sentiment, count in sentiment_counts:
-        result[sentiment] = count
-
-    return result
 
 @app.get("/news/sources")
 def get_source_data(db: Session = Depends(get_db)):
@@ -49,7 +36,7 @@ def get_source_data(db: Session = Depends(get_db)):
             "neutral": 0
             }
         #default values
-        
+
         for sent, count in query:
             source[sent] = count
 
