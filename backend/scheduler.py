@@ -32,5 +32,5 @@ def start_scheduler():
                 pass
             # print("cp 3")
 
-    scheduler.add_job(job, 'interval', minutes=20,next_run_time=datetime.now())
+    scheduler.add_job(job, 'interval', minutes=60,next_run_time=datetime.now())
     scheduler.start()
