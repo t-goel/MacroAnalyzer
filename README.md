@@ -1,124 +1,101 @@
-# Macroanalyser
-1. Purpose
-MacroFactor is an AI-powered web application that helps users understand and respond to macroeconomic news. This update adds financial sentiment analysis to enhance insights by quantifying the tone of macroeconomic events and news, providing predictive signals for market movements, and allowing users to visualize sentiment trends alongside market data.
+# MacroAnalyzer
+> **Quantifying the pulse of the market through AI-powered sentiment analysis of macroeconomic news.**
 
-2. Goals & Objectives
-Ingest macroeconomic news headlines and descriptions in near real-time.
+MacroAnalyzer is an intelligent web application designed to help users understand, visualize, and respond to macroeconomic events by quantifying the tone of financial news. By leveraging state-of-the-art NLP models, it provides actionable insights and predictive signals for market movements, enabling users to analyze sentiment trends alongside historical market data.
 
-Analyze sentiment using FinBERT, assigning each news item a positive, negative, or neutral score.
+---
 
-Store sentiment scores with news articles in the database.
+## 🚀 Features
 
-Visualize sentiment trends alongside historical SPY/QQQ market data.
+- **Near Real-Time News Ingestion**: Automatically pulls from multiple top-tier RSS feeds (Federal Reserve, Financial Times, WSJ, Bloomberg) and filters deduplicated articles.
+- **Advanced Sentiment Analysis**: Utilizes **FinBERT** (via Hugging Face Transformers) to score each headline and description for sentiment polarity (Positive, Negative, Neutral) and probability.
+- **Historical Market Impact Tracking**: Fetches SPY and QQQ price data to compare sentiment shifts around major macroeconomic events (e.g., CPI releases, Fed meetings).
+- **Interactive Visualizations**: Dynamic and filterable frontend charts built with **D3.js** displaying sentiment over time, price vs. sentiment correlation, and event-level breakdowns.
+- **Data Deduplication & Cleanup**: Automated backend jobs manage database health by removing items older than a predefined threshold.
 
-Correlate sentiment shifts with historical price movements to create actionable insights.
+---
 
-Enhance forecasting by including sentiment data in market prediction models.
+## 🛠️ Tech Stack
 
-3. Key Features
-News Ingestion
+### **Backend**
+- **Python 3.10+ / FastAPI**: Core API framework.
+- **PostgreSQL (via Supabase)**: Database for storing news articles, sentiment scores, and events.
+- **SQLAlchemy (ORM)**: Database interactions and modeling.
+- **APScheduler**: Periodic cron jobs for RSS polling and sentiment scoring.
+- **Transformers (Hugging Face)**: Running the local FinBERT models using PyTorch.
+- **yfinance**: Fetching historical and current market data.
 
-Pull from multiple RSS feeds (e.g., Federal Reserve, Financial Times, Wall Street Journal, Bloomberg).
+### **Frontend**
+- **Next.js 15 (React 19)**: Frontend framework and React environment.
+- **Tailwind CSS v4**: Utility-first styling for the modern UI.
+- **D3.js & Recharts**: Interactive data visualizations.
 
-Store article title, description, publication date, and source.
+---
 
-Deduplicate articles and remove items older than x days automatically.
+## ⚙️ Prerequisites
 
-Sentiment Analysis - display negative sentiment average for each news source
+- **Node.js**: v18 or newer
+- **Python**: v3.10 or newer
+- **PostgreSQL**: A Supabase instance or local PostgreSQL DB
+- **Financial Modeling Prep API Key**: For fetching broader financial metrics (Optional but recommended)
 
-Use FinBERT to score each headline/description for sentiment polarity and probability.
+---
 
-Output format:
+## 🖥️ Local Setup & Installation
 
-json
-Copy
-Edit
-{
-  "sentiment": "positive",
-  "positive_score": 0.85,
-  "negative_score": 0.05,
-  "neutral_score": 0.10
-}
-Store results in sentiment columns in the NewsItem table.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/t-goel/MacroAnalyzer.git
+cd MacroAnalyzer
+```
 
-Historical Market Impact
+### 2. Backend Setup
+Navigate to the backend directory and set up the Python environment:
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate  # On Windows: .\\venv\\Scripts\\activate
+pip install -r requirements.txt
+```
 
-Fetch SPY and QQQ price data for the past 12 months.
+**Environment Variables (`backend/.env`)**
+Create a `.env` file in the `backend/` directory:
+```env
+DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<dbname>
+```
 
-Compare sentiment shifts around macroeconomic events (e.g., CPI releases, Fed meetings).
+### 3. Frontend Setup
+Navigate to the frontend directory and install dependencies:
+```bash
+cd ../frontend
+npm install
+```
 
-Identify statistically significant sentiment-market correlations.
+**Environment Variables (`frontend/.env.local`)**
+Create a `.env.local` file in the `frontend/` directory:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+FMP_API_KEY=your_fmp_api_key_here
+```
 
-Interactive Visualizations
+---
 
-Frontend charts using D3.js:
+## 🏃‍♂️ Running the Application
 
-Sentiment over time (line chart)
+**1. Start the Backend API (and Schedulers)**
+```bash
+cd backend
+source venv/bin/activate
+uvicorn main:app --reload
+```
+The API will be available at `http://localhost:8000`.
 
-Price vs. sentiment correlation
+**2. Start the Frontend Application**
+Open a new terminal window:
+```bash
+cd frontend
+npm run dev
+```
+The frontend will be available at `http://localhost:3000`.
 
-Event-level sentiment breakdown
-
-Filters: date range, event type, sentiment type, source.
-
-Forecasting
-
-Include sentiment data as features in a simple ML model (e.g., logistic regression or gradient boosting) predicting next-day SPY/QQQ direction.
-
-Show model confidence and backtest results.
-
-Alerts
-
-Optional: Trigger a frontend alert or email when sentiment deviates significantly from historical norms before a macro event.
-
-4. Non-Goals
-Full-text semantic analysis of entire articles (titles and descriptions only for v1).
-
-High-frequency trading integration.
-
-Real-time sub-second streaming (5-10 minute updates are sufficient).
-
-5. Success Metrics
-Accuracy of sentiment classification vs. human-labeled benchmark (≥80%).
-
-Correlation strength (Pearson/Spearman) between sentiment shifts and market returns.
-
-User engagement: Time spent interacting with sentiment visualizations.
-
-Data freshness: News available within ≤ 10 minutes of publication.
-
-6. Technical Requirements
-Backend
-Python / FastAPI for API.
-
-PostgreSQL (Supabase) for storage.
-
-SQLAlchemy ORM.
-
-APScheduler for periodic jobs.
-
-FinBERT + pytorch via Hugging Face Transformers.
-
-yfinance for market data.
-
-Frontend
-Next.js + Tailwind CSS.
-
-D3.js for interactive charts.
-
-API integration for fetching processed sentiment and market data.
-
-Deployment
-Supabase for DB hosting.
-
-Vercel for frontend hosting.
-
-Railway/Render/AWS for backend.
-
-7. Risks & Mitigation
-RSS Feeds with Minimal Data → Use APIs or scrape full text for richer sentiment analysis.
-
-Model Accuracy on Finance Data → Test FinBERT and compare with alternative models (Cohere, OpenAI).
-
-API Limits / Latency → Cache results, schedule less frequent updates.
 
